@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Games | Sokaros</title>
+  <meta name="description" content="Play Sokaros games in your browser: Robot Snowball, Planet Zorb and Circuit Siege.">
+  <meta name="theme-color" content="#07060a">
+  <!-- SEAN: add a favicon later, e.g. <link rel="icon" href="assets/favicon.png"> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="crt">
+  <a class="sr-only" href="#main">Skip to content</a>
+  <!-- ===== Shared header / nav (same on every page) ===== -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html"><span class="logo-mark"></span>SOKAROS</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">MENU</button>
+      <nav aria-label="Main">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="games.html" aria-current="page">Games</a></li>
+          <li><a href="videos.html">Videos</a></li>
+          <li><a href="community.html">Community</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="kicker">Select your game</span>
+        <h1>Games</h1>
+        <p class="lead">Every Sokaros game runs right in your browser. Hit Play to launch it here, or open it on itch.io.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <!-- Cards are built automatically from js/games.js.
+             SEAN: to add/edit a game or its itch.io IDs, edit js/games.js only. -->
+        <div class="grid grid-3" id="games-grid">
+          <noscript><p class="empty">Enable JavaScript to see the games.</p></noscript>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== PLAY WINDOW (filled in by js/main.js when you click Play).
+       The itch.io iframe is only created on click, and removed on close. ===== -->
+  <div class="modal" id="play-modal" role="dialog" aria-modal="true" aria-labelledby="play-title" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <h2 id="play-title">Game</h2>
+        <button class="modal-close" type="button" data-close aria-label="Close">X</button>
+      </div>
+      <div class="modal-body">
+        <div class="embed-frame" id="play-frame"></div>
+        <div class="embed-toolbar">
+          <div class="btn-row">
+            <button class="btn btn-sm" type="button" id="play-fullscreen" data-icon="full">Fullscreen</button>
+            <a class="btn btn-sm btn-alt" id="play-itch" href="#" target="_blank" rel="noopener" hidden>Play on itch.io</a>
+          </div>
+          <span class="hint">Click inside the game to give it keyboard focus. If it won't load here, use Play on itch.io.</span>
+        </div>
+        <div class="modal-info">
+          <div>
+            <span class="tag" id="play-genre"></span>
+            <p id="play-desc" style="color:var(--muted)"></p>
+            <ul id="play-features"></ul>
+          </div>
+          <div class="controls">
+            <span class="pixel" style="font-size:.56rem;color:var(--red)">Controls</span>
+            <dl class="kv" id="play-controls"></dl>
+          </div>
+        </div>
+        <div id="play-widget" hidden></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Shared footer (same on every page) =====
+       Social links: href="#" placeholders. TODO (Sean): set the real URLs in
+       js/site-config.js (one place) - they are filled in automatically. -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="logo" href="index.html"><span class="logo-mark"></span>SOKAROS</a>
+        <nav class="footer-nav" aria-label="Footer" style="margin-top:1rem">
+          <a href="index.html">Home</a><a href="games.html">Games</a><a href="videos.html">Videos</a><a href="community.html">Community</a><a href="about.html">About</a>
+        </nav>
+      </div>
+      <div class="footer-social">
+        <a href="#" data-social="twitch" data-icon="twitch" aria-label="Twitch"></a>   <!-- TODO (Sean): Twitch -->
+        <a href="#" data-social="youtube" data-icon="youtube" aria-label="YouTube"></a> <!-- TODO (Sean): YouTube -->
+        <a href="#" data-social="x" data-icon="x" aria-label="X"></a>                   <!-- TODO (Sean): X -->
+        <a href="#" data-social="discord" data-icon="discord" aria-label="Discord"></a> <!-- TODO (Sean): Discord -->
+        <a href="#" data-social="tiktok" data-icon="tiktok" aria-label="TikTok"></a>    <!-- TODO (Sean): TikTok -->
+      </div>
+      <p class="copyright">&copy; 2026 SOKAROS</p>
+    </div>
+  </footer>
+
+  <!-- Data files first, then the shared script -->
+  <script src="js/site-config.js"></script>
+  <script src="js/games.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

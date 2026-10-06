@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About | Sokaros</title>
+  <meta name="description" content="About Sokaros: a group of friends making games together.">
+  <meta name="theme-color" content="#07060a">
+  <!-- SEAN: add a favicon later, e.g. <link rel="icon" href="assets/favicon.png"> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="crt">
+  <a class="sr-only" href="#main">Skip to content</a>
+  <!-- ===== Shared header / nav (same on every page) ===== -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html"><span class="logo-mark"></span>SOKAROS</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">MENU</button>
+      <nav aria-label="Main">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="videos.html">Videos</a></li>
+          <li><a href="community.html">Community</a></li>
+          <li><a href="about.html" aria-current="page">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container about-wrap">
+        <span class="kicker">Player profile</span>
+        <h1>About Sokaros</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container about-wrap">
+        <!-- ===== BIO (Sean's text). SEAN: EDIT the paragraphs below to update it. ===== -->
+        <article class="panel bio-card">
+          <div class="bio-head">
+            <!-- TODO (Sean): optional - swap this pixel badge for a logo/avatar image,
+                 e.g. <img class="bio-avatar" src="assets/your-avatar.png" alt="Sokaros"> -->
+            <div class="bio-avatar" aria-hidden="true">S</div>
+            <div>
+              <span class="kicker">&gt; Player 1</span>
+              <h2>SOKAROS</h2>
+            </div>
+          </div>
+          <div class="bio-text">
+            <p>SOKAROS started the way a lot of good games do: a group of friends messing around with ideas and seeing what we could build together. That turned into a habit of making games, and it hasn't stopped since.</p>
+            <p>I'm always on the lookout for the next new and exciting project, whether that's rolling a snowball through a whole town, flipping Space Invaders around so you're the alien, or holding off a virus swarm in a neon tower defense. If it sounds fun to make, I want to try it.</p>
+            <p class="bio-sign">Pick a game, hit play, and stay tuned. There's always something new in the works.<span class="blink">_</span></p>
+          </div>
+        </article>
+
+        <!-- ===== GAMES ROW (built automatically from js/games.js) ===== -->
+        <div class="about-games">
+          <span class="kicker">Select a game</span>
+          <div class="mini-games" id="about-games">
+            <noscript><a href="games.html">See all games</a></noscript>
+          </div>
+        </div>
+
+        <div class="btn-row about-ctas">
+          <a class="btn" href="games.html">All games</a>
+          <a class="btn btn-ghost" href="community.html">Join the community</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Shared footer (same on every page) =====
+       Social links: href="#" placeholders. TODO (Sean): set the real URLs in
+       js/site-config.js (one place) - they are filled in automatically. -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="logo" href="index.html"><span class="logo-mark"></span>SOKAROS</a>
+        <nav class="footer-nav" aria-label="Footer" style="margin-top:1rem">
+          <a href="index.html">Home</a><a href="games.html">Games</a><a href="videos.html">Videos</a><a href="community.html">Community</a><a href="about.html">About</a>
+        </nav>
+      </div>
+      <div class="footer-social">
+        <a href="#" data-social="twitch" data-icon="twitch" aria-label="Twitch"></a>   <!-- TODO (Sean): Twitch -->
+        <a href="#" data-social="youtube" data-icon="youtube" aria-label="YouTube"></a> <!-- TODO (Sean): YouTube -->
+        <a href="#" data-social="x" data-icon="x" aria-label="X"></a>                   <!-- TODO (Sean): X -->
+        <a href="#" data-social="discord" data-icon="discord" aria-label="Discord"></a> <!-- TODO (Sean): Discord -->
+        <a href="#" data-social="tiktok" data-icon="tiktok" aria-label="TikTok"></a>    <!-- TODO (Sean): TikTok -->
+      </div>
+      <p class="copyright">&copy; 2026 SOKAROS</p>
+    </div>
+  </footer>
+
+  <!-- Data files first, then the shared script -->
+  <script src="js/site-config.js"></script>
+  <script src="js/games.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

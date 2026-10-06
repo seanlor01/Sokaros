@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sokaros | Games, streams & videos</title>
+  <meta name="description" content="Sokaros: indie browser games, streams, videos and community.">
+  <meta name="theme-color" content="#07060a">
+  <!-- SEAN: add a favicon later, e.g. <link rel="icon" href="assets/favicon.png"> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="crt">
+  <a class="sr-only" href="#main">Skip to content</a>
+  <!-- ===== Shared header / nav (same on every page) ===== -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html"><span class="logo-mark"></span>SOKAROS</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">MENU</button>
+      <nav aria-label="Main">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="videos.html">Videos</a></li>
+          <li><a href="community.html">Community</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="container">
+        <span class="kicker">&gt; Player one ready<span class="blink">_</span></span>
+        <h1 class="hero-title" data-text="SOKAROS">SOKAROS</h1>
+        <!-- SEAN: EDIT tagline -->
+        <p class="hero-tag">Indie games, streams &amp; videos. <span class="accent">Press start.</span></p>
+        <div class="btn-row">
+          <a class="btn" href="games.html">Play games</a>
+          <a class="btn btn-ghost" href="#streams">Watch streams</a>
+          <!-- TODO (Sean): Discord invite goes in js/site-config.js -->
+          <a class="btn btn-alt" href="#" data-social="discord">Join Discord</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FEATURED GAMES (built automatically from js/games.js) ===== -->
+    <section class="section" id="featured">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Featured</span>
+            <h2>Games</h2>
+            <p class="lead">Free browser games by Sokaros. Click Play to launch one right here.</p>
+          </div>
+          <a class="btn btn-sm btn-ghost" href="games.html">All games</a>
+        </div>
+        <div class="strip" id="featured-games">
+          <noscript><p class="empty">Enable JavaScript to see the games, or open <a href="games.html">the Games page</a>.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STREAMS ===== -->
+    <section class="section" id="streams">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Live</span>
+            <h2><span class="live-dot"></span>Streams</h2>
+            <!-- SEAN: EDIT - add your stream schedule here if you have one -->
+            <p class="lead">Catch Sokaros live on Twitch. Schedule coming soon.</p>
+          </div>
+          <a class="btn btn-sm" href="#" data-social="twitch">Watch on Twitch</a>
+        </div>
+        <!-- TODO (Sean): replace this placeholder with the Twitch player embed:
+             <iframe src="https://player.twitch.tv/?channel=YOUR_CHANNEL&parent=YOUR_DOMAIN" allowfullscreen></iframe>
+             (Twitch requires the parent= value to match the site's domain.) -->
+        <div class="placeholder wide">
+          <div><span class="pixel">Twitch stream embed goes here</span><small>Offline / not connected yet</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== VIDEOS (newest 3, built automatically from js/videos.js)
+         SEAN: add/edit/remove videos in js/videos.js, not here. ===== -->
+    <section class="section" id="videos">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Watch</span>
+            <h2>Videos</h2>
+            <p class="lead">Devlogs, gameplay and highlights.</p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="videos.html">All videos</a>
+            <!-- TODO (Sean): YouTube channel URL goes in js/site-config.js -->
+            <a class="btn btn-sm btn-ghost" href="#" data-social="youtube">YouTube channel</a>
+          </div>
+        </div>
+        <div id="latest-videos">
+          <noscript><p class="empty">Enable JavaScript to see videos.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SOCIALS ===== -->
+    <section class="section" id="socials">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Follow</span>
+            <h2>Socials</h2>
+            <p class="lead">Find Sokaros around the internet.</p>
+          </div>
+        </div>
+        <div class="socials-grid">
+          <!-- TODO (Sean): real Twitch URL goes in js/site-config.js (social.twitch) -->
+          <a class="panel hoverable social-tile" href="#" data-social="twitch" data-icon="twitch"><span>Twitch<small>Live streams</small></span></a>
+          <!-- TODO (Sean): real YouTube URL goes in js/site-config.js (social.youtube) -->
+          <a class="panel hoverable social-tile" href="#" data-social="youtube" data-icon="youtube"><span>YouTube<small>Videos &amp; devlogs</small></span></a>
+          <!-- TODO (Sean): real X URL goes in js/site-config.js (social.x) -->
+          <a class="panel hoverable social-tile" href="#" data-social="x" data-icon="x"><span>X<small>Updates</small></span></a>
+          <!-- TODO (Sean): real Discord URL goes in js/site-config.js (social.discord) -->
+          <a class="panel hoverable social-tile" href="#" data-social="discord" data-icon="discord"><span>Discord<small>Community</small></span></a>
+          <!-- TODO (Sean): real TikTok URL goes in js/site-config.js (social.tiktok) -->
+          <a class="panel hoverable social-tile" href="#" data-social="tiktok" data-icon="tiktok"><span>TikTok<small>Clips</small></span></a>
+          <!-- TODO (Sean): real itch.io URL goes in js/site-config.js (social.itch) -->
+          <a class="panel hoverable social-tile" href="#" data-social="itch" data-icon="itch"><span>itch.io<small>All games</small></span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Shared footer (same on every page) =====
+       Social links: href="#" placeholders. TODO (Sean): set the real URLs in
+       js/site-config.js (one place) - they are filled in automatically. -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="logo" href="index.html"><span class="logo-mark"></span>SOKAROS</a>
+        <nav class="footer-nav" aria-label="Footer" style="margin-top:1rem">
+          <a href="index.html">Home</a><a href="games.html">Games</a><a href="videos.html">Videos</a><a href="community.html">Community</a><a href="about.html">About</a>
+        </nav>
+      </div>
+      <div class="footer-social">
+        <a href="#" data-social="twitch" data-icon="twitch" aria-label="Twitch"></a>   <!-- TODO (Sean): Twitch -->
+        <a href="#" data-social="youtube" data-icon="youtube" aria-label="YouTube"></a> <!-- TODO (Sean): YouTube -->
+        <a href="#" data-social="x" data-icon="x" aria-label="X"></a>                   <!-- TODO (Sean): X -->
+        <a href="#" data-social="discord" data-icon="discord" aria-label="Discord"></a> <!-- TODO (Sean): Discord -->
+        <a href="#" data-social="tiktok" data-icon="tiktok" aria-label="TikTok"></a>    <!-- TODO (Sean): TikTok -->
+      </div>
+      <p class="copyright">&copy; 2026 SOKAROS</p>
+    </div>
+  </footer>
+
+  <!-- Data files first, then the shared script -->
+  <script src="js/site-config.js"></script>
+  <script src="js/games.js"></script>
+  <script src="js/videos.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

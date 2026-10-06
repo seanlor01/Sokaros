@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Community | Sokaros</title>
+  <meta name="description" content="Sokaros news, events, crew and Discord.">
+  <meta name="theme-color" content="#07060a">
+  <!-- SEAN: add a favicon later, e.g. <link rel="icon" href="assets/favicon.png"> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="crt">
+  <a class="sr-only" href="#main">Skip to content</a>
+  <!-- ===== Shared header / nav (same on every page) ===== -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html"><span class="logo-mark"></span>SOKAROS</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">MENU</button>
+      <nav aria-label="Main">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="videos.html">Videos</a></li>
+          <li><a href="community.html" aria-current="page">Community</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="kicker">Party up</span>
+        <h1>Community</h1>
+        <p class="lead">News, events and the crew behind Sokaros.</p>
+      </div>
+    </section>
+
+    <!-- ===== NEWS (built from js/news.js - SEAN: edit posts there) ===== -->
+    <section class="section" id="news">
+      <div class="container">
+        <div class="section-head"><div><span class="kicker">Latest</span><h2>News</h2></div></div>
+        <div class="feed" id="news-feed">
+          <noscript><p class="empty">Enable JavaScript to see the news feed.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EVENTS (built from js/events.js - SEAN: edit events there) ===== -->
+    <section class="section" id="events">
+      <div class="container">
+        <div class="section-head"><div><span class="kicker">Calendar</span><h2>Events</h2></div></div>
+        <div class="feed" id="events-list">
+          <noscript><p class="empty">Enable JavaScript to see events.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CREW / MEMBERS (placeholder)
+         SEAN: EDIT - replace the placeholder cards with real crew members
+         (name, role, optional avatar <img>). Copy a card to add more. ===== -->
+    <section class="section" id="crew">
+      <div class="container">
+        <div class="section-head"><div><span class="kicker">The party</span><h2>Crew</h2><p class="lead">Crew members coming soon.</p></div></div>
+        <div class="grid grid-3">
+          <div class="panel member panel-body">
+            <div class="avatar-ph">S</div>
+            <h3>Sean</h3>
+            <p>Founder, Sokaros</p> <!-- TODO (Sean): your role/title -->
+          </div>
+          <div class="panel member panel-body">
+            <div class="avatar-ph">?</div>
+            <h3>Crew slot</h3>
+            <p>Placeholder member</p>
+          </div>
+          <div class="panel member panel-body">
+            <div class="avatar-ph">?</div>
+            <h3>Crew slot</h3>
+            <p>Placeholder member</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DISCORD CTA ===== -->
+    <section class="section" id="discord">
+      <div class="container">
+        <div class="panel cta">
+          <span class="kicker">Join the server</span>
+          <h2>Hang out on <span class="accent">Discord</span></h2>
+          <!-- SEAN: EDIT pitch text -->
+          <p>Chat about the games, share feedback and bug reports, and hear about new releases first.</p>
+          <!-- TODO (Sean): Discord invite URL goes in js/site-config.js (social.discord) -->
+          <a class="btn" href="#" data-social="discord" data-icon="discord">Join Discord</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Shared footer (same on every page) =====
+       Social links: href="#" placeholders. TODO (Sean): set the real URLs in
+       js/site-config.js (one place) - they are filled in automatically. -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="logo" href="index.html"><span class="logo-mark"></span>SOKAROS</a>
+        <nav class="footer-nav" aria-label="Footer" style="margin-top:1rem">
+          <a href="index.html">Home</a><a href="games.html">Games</a><a href="videos.html">Videos</a><a href="community.html">Community</a><a href="about.html">About</a>
+        </nav>
+      </div>
+      <div class="footer-social">
+        <a href="#" data-social="twitch" data-icon="twitch" aria-label="Twitch"></a>   <!-- TODO (Sean): Twitch -->
+        <a href="#" data-social="youtube" data-icon="youtube" aria-label="YouTube"></a> <!-- TODO (Sean): YouTube -->
+        <a href="#" data-social="x" data-icon="x" aria-label="X"></a>                   <!-- TODO (Sean): X -->
+        <a href="#" data-social="discord" data-icon="discord" aria-label="Discord"></a> <!-- TODO (Sean): Discord -->
+        <a href="#" data-social="tiktok" data-icon="tiktok" aria-label="TikTok"></a>    <!-- TODO (Sean): TikTok -->
+      </div>
+      <p class="copyright">&copy; 2026 SOKAROS</p>
+    </div>
+  </footer>
+
+  <!-- Data files first, then the shared script -->
+  <script src="js/site-config.js"></script>
+  <script src="js/news.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

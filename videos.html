@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Videos | Sokaros</title>
+  <meta name="description" content="Sokaros videos: devlogs, gameplay, trailers and stream highlights.">
+  <meta name="theme-color" content="#07060a">
+  <!-- SEAN: add a favicon later, e.g. <link rel="icon" href="assets/favicon.png"> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="crt">
+  <a class="sr-only" href="#main">Skip to content</a>
+  <!-- ===== Shared header / nav (same on every page) ===== -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html"><span class="logo-mark"></span>SOKAROS</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">MENU</button>
+      <nav aria-label="Main">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="videos.html" aria-current="page">Videos</a></li>
+          <li><a href="community.html">Community</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="kicker">Now playing</span>
+        <h1>Videos</h1>
+        <p class="lead">Devlogs, gameplay, trailers and stream highlights.</p>
+      </div>
+    </section>
+
+    <!-- Everything below is built automatically from js/videos.js.
+         SEAN: add / edit / remove videos in js/videos.js only. -->
+    <section class="section" id="video-featured-wrap" hidden>
+      <div class="container" id="video-featured"></div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="kicker">Library</span><h2>All videos</h2></div>
+          <a class="btn btn-sm btn-ghost" href="#" data-social="youtube">YouTube channel</a> <!-- TODO (Sean): URL in js/site-config.js -->
+        </div>
+        <div class="filters" id="video-filters" role="toolbar" aria-label="Filter videos by category" hidden></div>
+        <div id="video-grid">
+          <noscript><p class="empty">Enable JavaScript to see videos.</p></noscript>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== VIDEO PLAYER WINDOW (filled in by js/main.js).
+       The player is only created when a video is clicked, and removed on close. ===== -->
+  <div class="modal" id="video-modal" role="dialog" aria-modal="true" aria-labelledby="video-title" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <h2 id="video-title">Video</h2>
+        <button class="modal-close" type="button" data-close aria-label="Close">X</button>
+      </div>
+      <div class="modal-body">
+        <div class="embed-frame" id="video-frame"></div>
+        <div class="embed-toolbar">
+          <div class="post-meta" id="video-meta" style="margin:0"></div>
+          <a class="btn btn-sm btn-alt" id="video-ext" href="#" target="_blank" rel="noopener">Watch on YouTube</a>
+        </div>
+        <p id="video-desc" style="margin:0;color:var(--muted)"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Shared footer (same on every page) =====
+       Social links: href="#" placeholders. TODO (Sean): set the real URLs in
+       js/site-config.js (one place) - they are filled in automatically. -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="logo" href="index.html"><span class="logo-mark"></span>SOKAROS</a>
+        <nav class="footer-nav" aria-label="Footer" style="margin-top:1rem">
+          <a href="index.html">Home</a><a href="games.html">Games</a><a href="videos.html">Videos</a><a href="community.html">Community</a><a href="about.html">About</a>
+        </nav>
+      </div>
+      <div class="footer-social">
+        <a href="#" data-social="twitch" data-icon="twitch" aria-label="Twitch"></a>   <!-- TODO (Sean): Twitch -->
+        <a href="#" data-social="youtube" data-icon="youtube" aria-label="YouTube"></a> <!-- TODO (Sean): YouTube -->
+        <a href="#" data-social="x" data-icon="x" aria-label="X"></a>                   <!-- TODO (Sean): X -->
+        <a href="#" data-social="discord" data-icon="discord" aria-label="Discord"></a> <!-- TODO (Sean): Discord -->
+        <a href="#" data-social="tiktok" data-icon="tiktok" aria-label="TikTok"></a>    <!-- TODO (Sean): TikTok -->
+      </div>
+      <p class="copyright">&copy; 2026 SOKAROS</p>
+    </div>
+  </footer>
+
+  <!-- Data files first, then the shared script -->
+  <script src="js/site-config.js"></script>
+  <script src="js/games.js"></script>
+  <script src="js/videos.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
