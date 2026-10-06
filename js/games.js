@@ -22,6 +22,11 @@
                   "Embed game" tab, the number in ".../embed-upload/<ID>").
                   NOTE: it changes if you delete and re-upload the build file!
                   Leave "" to show the "itch.io embed goes here" placeholder.
+     width,height native size of the game's embed in pixels, exactly as set on
+                  the itch.io page (Edit game -> "Embed options" -> Viewport
+                  dimensions). The Play window renders the game at this size and
+                  scales it to fit, so it is never cropped. Default 1280 x 720
+                  if left out. Get these right for every new game!
      itchGameId   (optional) the numeric GAME ID, used for itch's small
                   buy/info widget https://itch.io/embed/<itchGameId>.
                   Leave "" to hide the widget.
@@ -47,6 +52,8 @@ window.SOKAROS_GAMES = [
       ["R", "Restart"]
     ],
     cover: "assets/covers/robot-snowball.png",
+    width: 1280,       // native embed width  (itch.io viewport)
+    height: 720,       // native embed height (itch.io viewport)
     itchUrl: "https://sokaros.itch.io/snowball",
     itchEmbedId: "19592375",   // itch.io upload ID (game embed)
     itchGameId: "5103294"     // itch.io game ID (buy/info widget)
@@ -69,6 +76,8 @@ window.SOKAROS_GAMES = [
       ["M", "Toggle music"]
     ],
     cover: "assets/covers/planet-zorb.png",
+    width: 960,       // native embed width  (itch.io viewport)
+    height: 720,       // native embed height (itch.io viewport)
     itchUrl: "https://sokaros.itch.io/planet-zorb",
     itchEmbedId: "19571825",   // itch.io upload ID (game embed)
     itchGameId: "5104206"     // itch.io game ID (buy/info widget)
@@ -96,6 +105,8 @@ window.SOKAROS_GAMES = [
       ["M", "Sound on/off"]
     ],
     cover: "assets/covers/circuit-siege.png",
+    width: 1280,       // native embed width  (itch.io viewport)
+    height: 720,       // native embed height (itch.io viewport)
     itchUrl: "https://sokaros.itch.io/circuit-siege",
     itchEmbedId: "19582940",   // itch.io upload ID (game embed)
     itchGameId: "5107439"     // itch.io game ID (buy/info widget)

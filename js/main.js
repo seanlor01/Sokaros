@@ -11,6 +11,11 @@
   "use strict";
 
   var ITCH_EMBED_COLOR = "0b0b0f"; // background colour itch uses around the game
+  // itch's embed-upload page adds a 1px border and a 20px "itch.io" footer bar
+  // around the game. The iframe is made this much bigger than the game's native
+  // size so the game area inside it is exactly width x height (no cropping).
+  var ITCH_CHROME_W = 2, ITCH_CHROME_H = 21;
+  var DEFAULT_GAME_W = 1280, DEFAULT_GAME_H = 720;
 
   /* ---------- helpers ---------- */
   function $(sel, root) { return (root || document).querySelector(sel); }
@@ -137,20 +142,30 @@
     var frame = $("#play-frame", modal);
     var fsBtn = $("#play-fullscreen", modal);
 
+    // Native size of the game (js/games.js width/height, default 1280x720).
+    var gw = parseInt(g.width, 10) || DEFAULT_GAME_W;
+    var gh = parseInt(g.height, 10) || DEFAULT_GAME_H;
+
     // The iframe is created only now, when the player clicked Play.
     if (g.itchEmbedId) {
+      var fw = gw + ITCH_CHROME_W, fh = gh + ITCH_CHROME_H;
+      frame.setAttribute("data-w", fw);
+      frame.setAttribute("data-h", fh);
       frame.innerHTML =
         '<div class="embed-loading">LOADING<span class="blink">_</span></div>' +
         '<iframe title="' + esc(g.title) + ' (playable on itch.io)" ' +
+        'width="' + fw + '" height="' + fh + '" style="width:' + fw + "px;height:" + fh + 'px" ' +
         'src="https://itch.io/embed-upload/' + encodeURIComponent(g.itchEmbedId) + "?color=" + ITCH_EMBED_COLOR + '" ' +
-        'allow="autoplay; fullscreen *; gamepad; cross-origin-isolated" allowfullscreen></iframe>';
+        'allow="autoplay; fullscreen *; gamepad; cross-origin-isolated" allowfullscreen scrolling="no"></iframe>';
       var ifr = $("iframe", frame);
       ifr.addEventListener("load", function () {
         var l = $(".embed-loading", frame); if (l) l.remove();
       });
       fsBtn.hidden = false;
     } else {
-      // No upload ID yet -> styled placeholder
+      // No upload ID yet -> styled placeholder (same box size as the game)
+      frame.setAttribute("data-w", gw);
+      frame.setAttribute("data-h", gh);
       frame.innerHTML =
         '<div class="placeholder"><div><span class="pixel">itch.io embed goes here</span>' +
         "<small>Add this game's itchEmbedId in js/games.js</small></div></div>";
@@ -177,7 +192,50 @@
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("modal-open");
     if (history.replaceState) history.replaceState(null, "", "#play-" + g.id);
+    fitGame();
     $(".modal-close", modal).focus();
+  }
+
+  /* Scale the native-size game iframe to fit the Play window (or the screen in
+     fullscreen) without cropping. The box around it is sized to the scaled
+     dimensions, so there's no clipping and no scrollbars. */
+  function fullscreenEl() { return document.fullscreenElement || document.webkitFullscreenElement || null; }
+
+  function fitGame() {
+    var modal = $("#play-modal");
+    if (!modal || !modal.classList.contains("open")) return;
+    var stage = $("#play-stage", modal), box = $("#play-frame", modal);
+    var dialog = $(".modal-dialog", modal), body = $(".modal-body", modal);
+    var head = $(".modal-head", modal), toolbar = $(".embed-toolbar", modal);
+    var w = parseFloat(box.getAttribute("data-w")), h = parseFloat(box.getAttribute("data-h"));
+    if (!w || !h) return;
+    var ifr = $("iframe", box), s, bw, bh;
+
+    if (fullscreenEl() === stage) {
+      // Fullscreen: fill the screen, keep aspect ratio (black letterbox), upscaling allowed.
+      s = Math.min(stage.clientWidth / w, stage.clientHeight / h);
+      bw = Math.floor(w * s); bh = Math.floor(h * s);
+    } else {
+      var BORDER = 8; // game-box border, both sides
+      var maxW = document.documentElement.clientWidth * 0.95;
+      var maxH = window.innerHeight * 0.94;
+      var gap = parseFloat(getComputedStyle(body).rowGap) || 0;
+      for (var pass = 0; pass < 2; pass++) {
+        // Space used by everything that isn't the game (measured, not guessed)
+        var chromeW = dialog.offsetWidth - stage.clientWidth;
+        var chromeH = (dialog.offsetHeight - dialog.clientHeight) + head.offsetHeight +
+          (stage.offsetTop - body.offsetTop) + gap + toolbar.offsetHeight + 12;
+        var availW = Math.max(120, maxW - chromeW - BORDER);
+        var availH = Math.max(120, maxH - chromeH - BORDER);
+        s = Math.min(availW / w, availH / h, 1); // never upscale inside the window
+        bw = Math.ceil(w * s); bh = Math.ceil(h * s);
+        dialog.style.width = Math.min(maxW, Math.max(bw + BORDER + chromeW, Math.min(720, maxW))) + "px";
+      }
+    }
+    box.style.width = bw + "px";
+    box.style.height = bh + "px";
+    if (ifr) ifr.style.transform = "scale(" + s + ")";
+    box.setAttribute("data-scale", s.toFixed(4));
   }
 
   function closeGame() {
@@ -186,6 +244,7 @@
     if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
     // Remove the iframes so the game (and its audio) stops completely.
     $("#play-frame", modal).innerHTML = "";
+    $(".modal-dialog", modal).style.width = "";
     $("#play-widget", modal).innerHTML = "";
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
@@ -204,10 +263,14 @@
       if (e.key === "Escape") closeGame();
     });
     $("#play-fullscreen", modal).addEventListener("click", function () {
-      var el = $("#play-frame", modal);
+      var el = $("#play-stage", modal); // fullscreen the wrapper; fitGame() scales the game up
       var req = el.requestFullscreen || el.webkitRequestFullscreen;
       if (req) req.call(el);
     });
+    var refit = function () { window.requestAnimationFrame(fitGame); };
+    window.addEventListener("resize", refit);
+    document.addEventListener("fullscreenchange", refit);
+    document.addEventListener("webkitfullscreenchange", refit);
     // Deep link from Home: games.html#play-<id>
     var m = location.hash.match(/^#play-(.+)$/);
     if (m && findGame(m[1])) openGame(m[1]);

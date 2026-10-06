@@ -47,15 +47,16 @@ generated from it. Each entry:
 | `cover`       | image path, e.g. `assets/covers/my-game.png` |
 | `itchUrl`     | itch.io page URL -> shows the **Play on itch.io** button (`""` hides it) |
 | `itchEmbedId` | itch.io **upload ID** of the HTML5 build -> embeds `https://itch.io/embed-upload/<id>?color=0b0b0f` (`""` shows an "itch.io embed goes here" placeholder) |
+| `width`, `height` | the game's **native embed size** in px, exactly as set on its itch.io page (Edit game -> Embed options -> Viewport dimensions). Default 1280 x 720 if omitted. **Set these for every new game.** |
 | `itchGameId`  | itch.io **game ID** -> shows itch's small buy/info widget `https://itch.io/embed/<id>` (`""` hides it) |
 
 Current itch.io data:
 
-| game | itchUrl | itchGameId | itchEmbedId (upload) |
-|------|---------|-----------:|---------------------:|
-| Robot Snowball | https://sokaros.itch.io/snowball | 5103294 | 19592375 |
-| Planet Zorb    | https://sokaros.itch.io/planet-zorb | 5104206 | 19571825 |
-| Circuit Siege  | https://sokaros.itch.io/circuit-siege | 5107439 | 19582940 |
+| game | itchUrl | itchGameId | itchEmbedId (upload) | width x height |
+|------|---------|-----------:|---------------------:|---------------:|
+| Robot Snowball | https://sokaros.itch.io/snowball | 5103294 | 19592375 | 1280 x 720 |
+| Planet Zorb    | https://sokaros.itch.io/planet-zorb | 5104206 | 19571825 | 960 x 720 |
+| Circuit Siege  | https://sokaros.itch.io/circuit-siege | 5107439 | 19582940 | 1280 x 720 |
 
 **Important:** the upload ID changes if you delete and re-upload a game's build
 zip on itch.io. If an embed suddenly shows an error, grab the new ID from
@@ -63,9 +64,15 @@ itch.io -> Edit game -> Distribute -> Embed game (the number in `.../embed-uploa
 and update `itchEmbedId`.
 
 How Play works: the game iframe is only created when the visitor clicks **Play**
-(nothing heavy loads with the page), it is shown 16:9 in a neon frame with a
-**Fullscreen** button and a **Play on itch.io** fallback, and it's removed again
-when the window closes so the game and its audio stop.
+(nothing heavy loads with the page) and removed again when the window closes so
+the game and its audio stop. Unity WebGL builds have a fixed-size canvas, so the
+iframe is rendered at the game's exact native `width` x `height` (plus the 2 x 21 px
+of border/footer that itch's embed page adds) and then **scaled down with a CSS
+transform** to fit the Play window (up to ~95% of the screen), keeping its aspect
+ratio. It is never cropped and never scaled above 100% inside the window; it
+refits on window resize. **Fullscreen** fullscreens the game's wrapper and scales
+the game up to fill the screen (black letterbox bars). There's also a
+**Play on itch.io** fallback button.
 
 To add a game: copy its cover into `assets/covers/`, then copy one entry in
 `js/games.js` and change the fields.

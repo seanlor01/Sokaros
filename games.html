@@ -55,13 +55,17 @@
        The itch.io iframe is only created on click, and removed on close. ===== -->
   <div class="modal" id="play-modal" role="dialog" aria-modal="true" aria-labelledby="play-title" aria-hidden="true">
     <div class="modal-backdrop" data-close></div>
-    <div class="modal-dialog">
+    <div class="modal-dialog game-dialog">
       <div class="modal-head">
         <h2 id="play-title">Game</h2>
         <button class="modal-close" type="button" data-close aria-label="Close">X</button>
       </div>
       <div class="modal-body">
-        <div class="embed-frame" id="play-frame"></div>
+        <!-- The game iframe is rendered at its native size (width/height in js/games.js)
+             and scaled to fit with a CSS transform, so nothing is ever cropped. -->
+        <div class="game-stage" id="play-stage">
+          <div class="game-box" id="play-frame"></div>
+        </div>
         <div class="embed-toolbar">
           <div class="btn-row">
             <button class="btn btn-sm" type="button" id="play-fullscreen" data-icon="full">Fullscreen</button>

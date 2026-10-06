@@ -487,3 +487,27 @@ body.modal-open { overflow: hidden; }
 
 .embed-frame video { width: 100%; height: 100%; display: block; background: #000; }
 .embed-frame.vertical { aspect-ratio: 9 / 16; height: min(72vh, 640px); width: auto; max-width: 100%; margin: 0 auto; }
+
+/* ---------- Game Play window: native-size iframe scaled to fit ---------- */
+#play-modal { padding: 3vh 2.5vw; }
+.game-dialog { width: 95vw; max-width: 95vw; max-height: 94vh; } /* JS narrows width to fit the game */
+.game-dialog .modal-head { padding: .55rem 1rem; }
+.game-dialog .modal-close { width: 38px; height: 38px; }
+.game-dialog .modal-body { padding: .9rem 1rem 1.1rem; gap: .9rem; }
+.game-stage { display: flex; align-items: center; justify-content: center; min-width: 0; }
+.game-box {
+  position: relative; flex: none; overflow: hidden; background: #000;
+  box-sizing: content-box; width: 640px; height: 360px; /* real size set by JS */
+  border: var(--px) solid var(--red);
+  box-shadow: var(--glow-md), inset 0 0 24px rgba(255, 31, 61, .25);
+}
+.game-box iframe {
+  position: absolute; left: 0; top: 0; border: 0; display: block; max-width: none;
+  transform-origin: 0 0; background: #000;
+}
+.game-box .placeholder { width: 100%; height: 100%; aspect-ratio: auto; border: 0; }
+.game-stage:fullscreen { width: 100vw; height: 100vh; background: #000; }
+.game-stage:-webkit-full-screen { width: 100vw; height: 100vh; background: #000; }
+.game-stage:fullscreen .game-box { border: 0; box-shadow: none; }
+.game-stage:-webkit-full-screen .game-box { border: 0; box-shadow: none; }
+.game-stage::backdrop { background: #000; }
