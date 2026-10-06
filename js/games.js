@@ -27,6 +27,10 @@
                   dimensions). The Play window renders the game at this size and
                   scales it to fit, so it is never cropped. Default 1280 x 720
                   if left out. Get these right for every new game!
+     commentsTerm (optional) comment thread name for this game. By default every
+                  game automatically gets the thread "Game: <title>" (prefix set
+                  in js/site-config.js). If you RENAME a game, set this to the
+                  old name (e.g. "Game: Old Title") to keep its existing comments.
      itchGameId   (optional) the numeric GAME ID, used for itch's small
                   buy/info widget https://itch.io/embed/<itchGameId>.
                   Leave "" to hide the widget.

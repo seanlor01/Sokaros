@@ -511,3 +511,14 @@ body.modal-open { overflow: hidden; }
 .game-stage:fullscreen .game-box { border: 0; box-shadow: none; }
 .game-stage:-webkit-full-screen .game-box { border: 0; box-shadow: none; }
 .game-stage::backdrop { background: #000; }
+
+/* ---------- Game comments (giscus) ---------- */
+.game-comments {
+  position: relative; padding: 1.25rem 1.25rem 1rem; scroll-margin-top: 1rem;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: var(--px) solid var(--red); box-shadow: var(--glow-md);
+}
+.game-comments h3 { font-size: .85rem; margin: 0 0 .5rem; color: #fff; text-shadow: var(--text-glow); }
+.comments-hint { margin: 0 0 1rem; color: var(--muted); font-size: .9rem; }
+.game-comments .giscus { min-height: 120px; }
+.game-comments .giscus-frame { width: 100%; border: 0; color-scheme: normal; } /* must match giscus page, else browsers paint it white */

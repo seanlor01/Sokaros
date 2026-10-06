@@ -14,8 +14,9 @@ sokaros-site/
 ├── community.html      News feed, Events, Crew, Discord call-to-action
 ├── about.html          About Sokaros: Sean's bio card + links to the games
 ├── css/style.css       All styling (colours are CSS variables at the top)
+├── css/giscus-theme.css  Red-neon theme for the comment box (loaded by giscus)
 ├── js/
-│   ├── site-config.js  Social / Discord / itch profile links  <- EDIT
+│   ├── site-config.js  Social links + giscus comments config  <- EDIT
 │   ├── games.js        Game data + itch.io IDs                <- EDIT
 │   ├── news.js         News posts                              <- EDIT
 │   ├── events.js       Events                                  <- EDIT
@@ -48,6 +49,7 @@ generated from it. Each entry:
 | `itchUrl`     | itch.io page URL -> shows the **Play on itch.io** button (`""` hides it) |
 | `itchEmbedId` | itch.io **upload ID** of the HTML5 build -> embeds `https://itch.io/embed-upload/<id>?color=0b0b0f` (`""` shows an "itch.io embed goes here" placeholder) |
 | `width`, `height` | the game's **native embed size** in px, exactly as set on its itch.io page (Edit game -> Embed options -> Viewport dimensions). Default 1280 x 720 if omitted. **Set these for every new game.** |
+| `commentsTerm` | optional comment-thread name; default `Game: <title>` (see Game comments below). Set it to the old name if you rename a game, so its comments stay attached |
 | `itchGameId`  | itch.io **game ID** -> shows itch's small buy/info widget `https://itch.io/embed/<id>` (`""` hides it) |
 
 Current itch.io data:
@@ -108,6 +110,29 @@ which the site fills in automatically from the address it's served from; they wo
 on a real domain over https (or on localhost), not when opening files from disk.
 Some YouTube videos have embedding disabled by their owner; those show
 "unavailable" in the player, and the fallback button still works.
+
+### Game comments (giscus / GitHub Discussions)
+Each game's Play window has a **Comments** section powered by [giscus](https://giscus.app):
+comments are stored as GitHub Discussions in `seanlor01/Sokaros`, and visitors sign
+in with GitHub to comment or react.
+
+- **Config:** `js/site-config.js` -> `giscus` (repo, repo ID, category "Announcements",
+  category ID, thread prefix, theme). Set `enabled: false` to hide comments everywhere.
+- **One thread per game, automatically:** the thread is named `Game: <game title>`
+  (strict matching), so any new game added to `js/games.js` gets its own thread;
+  giscus creates the Discussion when the first comment is posted. Renaming a game
+  starts a new thread unless you set its `commentsTerm` to the old name.
+- **Moderation:** edit, delete, hide, lock or pin comments in the repo's Discussions tab:
+  https://github.com/seanlor01/Sokaros/discussions
+- **Requires the giscus GitHub App** installed on the repo (https://github.com/apps/giscus).
+  Until it is, the comment box shows giscus's "not installed" error.
+- **Theme:** `css/giscus-theme.css` (based on giscus's dark theme, red accents). giscus
+  loads it from its public URL `https://seanlor01.github.io/Sokaros/css/giscus-theme.css`,
+  so colour edits show up after pushing. When the site runs anywhere else (e.g. local
+  testing) the built-in `transparent_dark` theme is used instead.
+- **Links:** `games.html#play-<id>` opens a game; `games.html#comments-<id>` opens it
+  scrolled to its comments. The **Comments** button in the Play window jumps there too.
+- giscus is only loaded while a Play window is open, and is removed on close.
 
 ### News
 Edit **`js/news.js`** (newest first). The two current posts are marked

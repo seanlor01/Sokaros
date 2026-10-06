@@ -133,7 +133,7 @@
     return (window.SOKAROS_GAMES || []).filter(function (g) { return g.id === id; })[0];
   }
 
-  function openGame(id, trigger) {
+  function openGame(id, trigger, toComments) {
     var g = findGame(id), modal = $("#play-modal");
     if (!g || !modal) return;
     lastFocus = trigger || document.activeElement;
@@ -191,9 +191,74 @@
     modal.classList.add("open");
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("modal-open");
-    if (history.replaceState) history.replaceState(null, "", "#play-" + g.id);
+    loadComments(g);
+    $(".modal-dialog", modal).scrollTop = 0;
+    if (history.replaceState) history.replaceState(null, "", (toComments ? "#comments-" : "#play-") + g.id);
     fitGame();
     $(".modal-close", modal).focus();
+    if (toComments) window.requestAnimationFrame(function () { scrollToComments(false); });
+  }
+
+  /* ---------- Game comments: giscus (GitHub Discussions) ----------
+     Config lives in js/site-config.js (giscus). Each game gets its own thread:
+     term = game.commentsTerm, or termPrefix + game title. The giscus script is
+     injected only when the Play window opens and removed when it closes, so
+     switching games always loads that game's thread. */
+  function giscusConfig() {
+    var c = window.SOKAROS_CONFIG && window.SOKAROS_CONFIG.giscus;
+    return c && c.enabled && c.repo && c.repoId && c.categoryId ? c : null;
+  }
+
+  function unloadComments() {
+    var sec = $("#play-comments-section");
+    if (!sec) return;
+    var box = $(".giscus", sec);
+    box.innerHTML = "";
+    box.removeAttribute("data-term");
+    $all('script[src^="https://giscus.app/"]', sec).forEach(function (n) { n.remove(); });
+  }
+
+  function loadComments(g) {
+    var sec = $("#play-comments-section"), btn = $("#play-to-comments");
+    if (!sec) return;
+    unloadComments();
+    var c = giscusConfig();
+    if (!c) { sec.hidden = true; if (btn) btn.hidden = true; return; }
+    var term = g.commentsTerm || ((c.termPrefix || "") + g.title);
+    var theme = (c.themeUrl && location.hostname === c.liveHost) ? c.themeUrl : (c.fallbackTheme || "transparent_dark");
+    var attrs = {
+      "data-repo": c.repo,
+      "data-repo-id": c.repoId,
+      "data-category": c.category,
+      "data-category-id": c.categoryId,
+      "data-mapping": "specific",
+      "data-term": term,
+      "data-strict": "1",
+      "data-reactions-enabled": "1",
+      "data-emit-metadata": "0",
+      "data-input-position": "top",
+      "data-theme": theme,
+      "data-lang": c.lang || "en",
+      "data-loading": "lazy"
+    };
+    var sc = document.createElement("script");
+    sc.src = "https://giscus.app/client.js";
+    Object.keys(attrs).forEach(function (k) { sc.setAttribute(k, attrs[k]); });
+    sc.crossOrigin = "anonymous";
+    sc.async = true;
+    var box = $(".giscus", sec);
+    box.setAttribute("data-term", term);
+    // giscus uses the container id in the "back to site" link it puts in the
+    // GitHub Discussion, so make it this game's deep link (games.html#comments-<id>).
+    box.id = "comments-" + g.id;
+    sec.hidden = false;
+    if (btn) btn.hidden = false;
+    sec.appendChild(sc); // giscus renders its iframe into the .giscus div
+  }
+
+  function scrollToComments(smooth) {
+    var sec = $("#play-comments-section");
+    if (sec && !sec.hidden) sec.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
   }
 
   /* Scale the native-size game iframe to fit the Play window (or the screen in
@@ -246,6 +311,7 @@
     $("#play-frame", modal).innerHTML = "";
     $(".modal-dialog", modal).style.width = "";
     $("#play-widget", modal).innerHTML = "";
+    unloadComments();
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("modal-open");
@@ -271,9 +337,17 @@
     window.addEventListener("resize", refit);
     document.addEventListener("fullscreenchange", refit);
     document.addEventListener("webkitfullscreenchange", refit);
-    // Deep link from Home: games.html#play-<id>
-    var m = location.hash.match(/^#play-(.+)$/);
-    if (m && findGame(m[1])) openGame(m[1]);
+    var toC = $("#play-to-comments", modal);
+    if (toC) toC.addEventListener("click", function () { scrollToComments(true); });
+    // Deep links: games.html#play-<id> opens a game, #comments-<id> opens it at its comments
+    function openFromHash() {
+      var m = location.hash.match(/^#(play|comments)-(.+)$/);
+      if (!m || !findGame(m[2])) return;
+      closeGame(); // switching games: drop the old game + comment thread first
+      openGame(m[2], null, m[1] === "comments");
+    }
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash); // links clicked while on games.html
   }
 
   /* ---------- news (from js/news.js) ---------- */

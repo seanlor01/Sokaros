@@ -70,6 +70,7 @@
           <div class="btn-row">
             <button class="btn btn-sm" type="button" id="play-fullscreen" data-icon="full">Fullscreen</button>
             <a class="btn btn-sm btn-alt" id="play-itch" href="#" target="_blank" rel="noopener" hidden>Play on itch.io</a>
+            <button class="btn btn-sm btn-ghost" type="button" id="play-to-comments" hidden>Comments</button>
           </div>
           <span class="hint">Click inside the game to give it keyboard focus. If it won't load here, use Play on itch.io.</span>
         </div>
@@ -85,6 +86,13 @@
           </div>
         </div>
         <div id="play-widget" hidden></div>
+        <!-- ===== COMMENTS (giscus / GitHub Discussions). Loaded only while the
+             Play window is open; one thread per game. Config: js/site-config.js ===== -->
+        <section class="game-comments" id="play-comments-section" aria-labelledby="play-comments-title" hidden>
+          <h3 id="play-comments-title"><span class="live-dot"></span>Comments</h3>
+          <p class="comments-hint">Sign in with GitHub to leave a comment.</p>
+          <div class="giscus"></div>
+        </section>
       </div>
     </div>
   </div>
